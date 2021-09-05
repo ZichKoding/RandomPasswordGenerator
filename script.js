@@ -29,14 +29,20 @@ var passwordLength = function() {
 
 // Determining character types function
 var charTypes = function() {
-  /* Add validation later */
-
+  var theTypes = "";
   //Ask if the user wants lower and upper case letters in their password
   let letters = confirm("Would you like lower and upper case letters in your password?");
   if (letters) {
     var lowerUpperabcs = (
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     );
+
+    if (theTypes === "") {
+      theTypes = lowerUpperabcs;
+    } else {
+      theTypes += lowerUpperabcs
+    }
+
   } else {
     var lowerUpperabcs = "";
   }
@@ -47,6 +53,13 @@ var charTypes = function() {
     var numberItems = (
       '0123456789'
     );
+
+    if (theTypes === "") {
+      theTypes = lowerUpperabcs;
+    } else {
+      theTypes += lowerUpperabcs
+    }
+
   } else {
     var numberItems = "";
   }
@@ -56,14 +69,30 @@ var charTypes = function() {
   if (specs) {
     var specialChars = (
       '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
-    );    
+    );
+    
+    if (theTypes === "") {
+      theTypes = lowerUpperabcs;
+    } else {
+      theTypes += lowerUpperabcs
+    }
+    
   } else {
     var specialChars = "";
   }
-  
-  let whatCharTypes = (lowerUpperabcs + numberItems + specialChars)
 
-  return whatCharTypes;
+  // Validating if User confirmed any character types.
+  if (
+    lowerUpperabcs === "" &&
+    numberItems === "" &&
+    specialChars === ""
+  ) {
+    alert("Please confirm at least ONE character type to add to your generated password!");
+    charTypes();
+  }
+  else {
+    return theTypes;
+  }
 }
 
 
