@@ -22,8 +22,20 @@ var generatePassword = function(len) {
 
 // Determining password length function
 var passwordLength = function() {
-  // save validation for that GitHub issue.
   let len = prompt("Choose a password length between 8 and 128 characters long");
+
+  // validating user input
+  if (parseInt(len)){
+    if (parseInt(len) < 8 || parseInt(len) > 128) {
+      alert("Please enter a valid number!");
+      passwordLength();
+    }
+  } 
+  else {
+    alert("Enter a valid number!");
+    passwordLength();
+  }
+
   return len;
 };
 
@@ -33,14 +45,12 @@ var charTypes = function() {
   //Ask if the user wants lower and upper case letters in their password
   let letters = confirm("Would you like lower and upper case letters in your password?");
   if (letters) {
-    var lowerUpperabcs = (
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    );
+    lowerUpperabcs
 
     if (theTypes === "") {
       theTypes = lowerUpperabcs;
     } else {
-      theTypes += lowerUpperabcs
+      theTypes += lowerUpperabcs;
     }
 
   } else {
@@ -50,14 +60,12 @@ var charTypes = function() {
   // Ask if user wants numbers in their password
   let nums = confirm("Would you like numbers in your password?");
   if (nums) {
-    var numberItems = (
-      '0123456789'
-    );
+    numberItems
 
     if (theTypes === "") {
-      theTypes = lowerUpperabcs;
+      theTypes = numberItems;
     } else {
-      theTypes += lowerUpperabcs
+      theTypes += numberItems;
     }
 
   } else {
@@ -67,18 +75,18 @@ var charTypes = function() {
   // Ask if user wants special characters in their password
   let specs = confirm("Would you like special characters in your password?");
   if (specs) {
-    var specialChars = (
+    specialChars = (
       '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
     );
     
     if (theTypes === "") {
-      theTypes = lowerUpperabcs;
+      theTypes = specialChars;
     } else {
-      theTypes += lowerUpperabcs
+      theTypes += specialChars;
     }
     
   } else {
-    var specialChars = "";
+    specialChars = "";
   }
 
   // Validating if User confirmed any character types.
@@ -93,7 +101,18 @@ var charTypes = function() {
   else {
     return theTypes;
   }
-}
+};
+
+// Declaring Variables
+var specialChars = (
+  '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
+);
+var numberItems = (
+  '0123456789'
+);
+var lowerUpperabcs = (
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+);
 
 
 // Get references to the #generate element
