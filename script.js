@@ -11,10 +11,17 @@ const specialChars = (
   '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
 );
 
-var generatePassword = function() {
+var passwordLength = function() {
+  // save validation for that GitHub issue.
+  let len = prompt("Choose a password length between 8 and 128 characters long");
+  return len;
+}
+
+var generatePassword = function(len) {
   let genPass = "";
+  len = passwordLength();
   // loop through and choose random items
-  for (i = 0; i < 8; i++) {
+  for (i = 0; i < len; i++) {
     let letters = Math.floor(Math.random() * lowerUpperabcs.length) + 1;
     genPass += lowerUpperabcs[letters];
 
@@ -27,6 +34,7 @@ var generatePassword = function() {
 
   return genPass;
 }
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
