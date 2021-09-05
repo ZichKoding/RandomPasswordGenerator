@@ -15,25 +15,32 @@ var passwordLength = function() {
   // save validation for that GitHub issue.
   let len = prompt("Choose a password length between 8 and 128 characters long");
   return len;
-}
+};
 
 var generatePassword = function(len) {
   let genPass = "";
   len = passwordLength();
   // loop through and choose random items
-  for (i = 0; i < len; i++) {
-    let letters = Math.floor(Math.random() * lowerUpperabcs.length) + 1;
-    genPass += lowerUpperabcs[letters];
+  for (let i = 0; i < len; i++) {
 
-    let nums = Math.floor(Math.random() * numberItems.length) +1;
-    genPass += numberItems[nums];
+    let lettersNumsSpecs = (
+      lowerUpperabcs + 
+      numberItems + 
+      specialChars
+      );
 
-    let specchar = Math.floor(Math.random() * specialChars.length) +1;
-    genPass += specialChars[specchar];
+    // Randomly choose which character type
+    let passChars = Math.floor(Math.random() * lettersNumsSpecs.length) + 1;
+    // Randomly choose a character type and add it to genPass variable
+    if (genPass === "") {
+      genPass = lettersNumsSpecs[passChars];
+    }
+    else {
+      genPass += lettersNumsSpecs[passChars];
+    }
   }
-
   return genPass;
-}
+};
 
 
 // Get references to the #generate element
