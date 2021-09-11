@@ -2,8 +2,7 @@
 
 **_Click the image below for deployed link_**
 
-`image`
-https://zichkoding.github.io/RandomPasswordGenerator/
+[![Chris Zichko's Portfolio](./PasswordGenerator.png)](https://zichkoding.github.io/RandomPasswordGenerator/)
 
 ## **Table of Contents**
 * How it works
