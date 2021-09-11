@@ -1,118 +1,113 @@
-// Assignment code here
+// variables for the different types of characters
+var lowerABCs = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
+lowerABCs = lowerABCs.split(" ");
+
+var upperABCs = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+upperABCs = upperABCs.split(" ");
+
+var numberItems = "0 1 2 3 4 5 6 7 8 9"
+numberItems = numberItems.split(" ");
+
+var specialChars = "! @ # $ % ^ & * ( ) ` ~ - _  + = { } [ ] ; : ' , . / < > ? |" + '"';
+specialChars = specialChars.split(" ");
+
 
 // Generate password function
-var generatePassword = function(len) {
-  let genPass = "";
-  len = passwordLength();
-  let lettersNumsSpecs = charTypes();
-  // loop through and choose random items
-  for (let i = 0; i < len; i++) {
-    // Randomly choose which character type
-    let passChars = Math.floor(Math.random() * lettersNumsSpecs.length) + 1;
-    // Randomly choose a character type and add it to genPass variable
-    if (genPass === "") {
-      genPass = lettersNumsSpecs[passChars];
-    }
-    else {
-      genPass += lettersNumsSpecs[passChars];
-    }
-  }
-  return genPass;
+var generatePassword = function() {
+  let genPassword = charTypes();
+  return genPassword;
 };
 
 // Determining password length function
 var passwordLength = function() {
-  let len = prompt("Choose a password length between 8 and 128 characters long");
+  var len = prompt("Choose a password length between 8 and 128 characters long");
 
   // validating user input
   if (parseInt(len)){
     if (parseInt(len) < 8 || parseInt(len) > 128) {
-      alert("Please enter a valid number!");
+      alert("Please enter a number between 8 and 128!");
       passwordLength();
     }
   } 
+  // validating if the user did not enter an integer
   else {
     alert("Enter a valid number!");
     passwordLength();
   }
-
-  return len;
+  return parseInt(len);
 };
 
 // Determining character types function
 var charTypes = function() {
-  var theTypes = "";
-  //Ask if the user wants lower and upper case letters in their password
-  let letters = confirm("Would you like lower and upper case letters in your password?");
-  if (letters) {
-    lowerUpperabcs
+  // object to store what character types the user requested
+  var theTypes = [];
 
-    if (theTypes === "") {
-      theTypes = lowerUpperabcs;
-    } else {
-      theTypes += lowerUpperabcs;
-    }
+  // getting the user inputs
+  var len = passwordLength();
+  var lower = confirm("Would you like lowercase letters in your password?");
+  var upper = confirm("Would you like uppercase letters in your password?");
+  var nums = confirm("Would you like numbers letters in your password?");
+  var specs = confirm("Would you like symbols letters in your password?");
 
-  } else {
-    var lowerUpperabcs = "";
+  // if the user confirms they want lowercase, uppercase, numbers, or symbols it wil push that type of characters to theTypes
+  if (lower) { 
+     theTypes.push(lowerABCs);
   }
-  
-  // Ask if user wants numbers in their password
-  let nums = confirm("Would you like numbers in your password?");
+  if (upper) {
+    theTypes.push(upperABCs);
+  }
   if (nums) {
-    numberItems
-
-    if (theTypes === "") {
-      theTypes = numberItems;
-    } else {
-      theTypes += numberItems;
-    }
-
-  } else {
-    var numberItems = "";
+    theTypes.push(numberItems);
   }
-
-  // Ask if user wants special characters in their password
-  let specs = confirm("Would you like special characters in your password?");
   if (specs) {
-    specialChars = (
-      '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
-    );
-    
-    if (theTypes === "") {
-      theTypes = specialChars;
-    } else {
-      theTypes += specialChars;
-    }
-    
-  } else {
-    specialChars = "";
-  }
-
-  // Validating if User confirmed any character types.
+    theTypes.push(specialChars);
+  } 
+  // if user doesn't confirm any character type then we call the charTypes() function again
   if (
-    lowerUpperabcs === "" &&
-    numberItems === "" &&
-    specialChars === ""
+    !lower &&
+    !upper &&
+    !nums &&
+    !specs
   ) {
-    alert("Please confirm at least ONE character type to add to your generated password!");
+    alert("Please choose at least one type of characters you would like in your password!");
     charTypes();
   }
-  else {
-    return theTypes;
-  }
-};
 
-// Declaring Variables
-var specialChars = (
-  '!@#$%^&*()-_=+`~[]{}|:;"",<.>/?'
-);
-var numberItems = (
-  '0123456789'
-);
-var lowerUpperabcs = (
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-);
+  // creates password contents off of types and length. 
+  var thePass = "";
+
+  for (var i =0; i < len; i++) {
+    // if thePass is equal to the length the users desired length it will break the loop to ensure it does not go over the desired length
+    if (thePass.length === len) {
+      break;
+    }
+    // keep adding characters if thePass length does not match the user's desired length
+    else if (thePass.length < len) {
+
+      // This conditional statement ensures at least one of each character type selected is in thePass
+      if (i < theTypes.length) {
+        if (thePass === "") {
+          thePass = theTypes[i][Math.floor(Math.random() * theTypes[i].length)];
+        } else {
+          thePass += theTypes[i][Math.floor(Math.random() * theTypes[i].length)];
+        }
+
+      }
+      // if theTypes object length is less than i then randomly choose a character from any object in the array.
+      else if (theTypes.length <= i) {
+        // created a variable randomItem to keep from having to type out the random key
+        var randomItem = Math.floor(Math.random() * theTypes.length);
+
+        // randomly choosing a character to add to the pass word from the object
+        thePass += theTypes[randomItem][Math.floor(Math.random() * theTypes[randomItem].length)];
+        console.log(thePass);
+
+      }
+      console.log(thePass.length + " characters!");
+    }
+  }
+  return thePass;
+};
 
 
 // Get references to the #generate element
